@@ -1,0 +1,42 @@
+# Déploiement Netlify — site statique déjà généré dans dist/
+[build]
+  publish = "dist"
+  command = ""
+
+# Anciennes adresses du site WordPress → nouvelles pages (301 permanentes)
+[[redirects]]
+  from = "/contactez-nous/*"
+  to = "/contact.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/mentions-legales/*"
+  to = "/mentions-legales.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/home/*"
+  to = "/"
+  status = 301
+  force = true
+
+# Pages sans extension → version .html canonique
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 301
+
+# En-têtes : cache long pour les médias, sécurité de base
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
